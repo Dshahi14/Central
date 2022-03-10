@@ -1,5 +1,8 @@
+parameters:
+  WebAppName: ''
+
 jobs:
- - job:
+ - job: Build
    steps:
     - task: NuGetToolInstaller@1
 
@@ -13,3 +16,15 @@ jobs:
        msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
        platform: '$(buildPlatform)'
        configuration: '$(buildConfiguration)'
+       
+ - job: Deploy
+   steps:
+   - task: AzureRmWebAppDeployment@4
+     inputs:
+       ConnectionType: 'AzureRM'
+       azureSubscription: 'Azure'
+       appType: 'webApp'
+       WebAppName: ${{ parameter.WebAppName }}
+       packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+       
+  
