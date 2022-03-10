@@ -1,6 +1,7 @@
 parameters:
   WebAppName: ''
-  
+
+jobs: 
  - job: Deploy
    steps:
    - task: AzureRmWebAppDeployment@4
