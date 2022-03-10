@@ -17,14 +17,5 @@ jobs:
        platform: '$(buildPlatform)'
        configuration: '$(buildConfiguration)'
        
- - job: Deploy
-   steps:
-   - task: AzureRmWebAppDeployment@4
-     inputs:
-       ConnectionType: 'AzureRM'
-       azureSubscription: 'Azure'
-       appType: 'webApp'
-       WebAppName: ${{ parameter.WebAppName }}
-       packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
        
   
